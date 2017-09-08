@@ -4,7 +4,6 @@ import akka.actor.ActorSystem
 import com.digitalpetri.modbus.master.{ModbusTcpMaster, ModbusTcpMasterConfig}
 import com.digitalpetri.modbus.requests.ReadHoldingRegistersRequest
 import com.digitalpetri.modbus.responses.ByteBufModbusResponse
-import com.typesafe.scalalogging.Logger
 import io.gatling.commons.stats.{KO, OK}
 import io.gatling.commons.validation.Validation
 import io.gatling.core.action.{Action, ChainableAction, ExitableAction}
@@ -31,6 +30,8 @@ final case class ConnectAction(host: Expression[String], port: Expression[Int], 
       portVal <- port(session)
     } yield {
       val requestName = s"Connect to [$hostVal] [$portVal]"
+
+      logger.debug(requestName)
 
       val requestStartDate = System.currentTimeMillis
 
